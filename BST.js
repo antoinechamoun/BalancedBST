@@ -85,7 +85,7 @@ Node.prototype.getHeight = function(){
         console.log('go left');
         height += 1 + this.left.getHeight()
     }else{
-        height += 1 + this.right.getHeight() + this.left.getHeight()
+        height += 1 + Math.max(this.left.getHeight(), this.right.getHeight())
     }
     return height
 }
@@ -136,6 +136,7 @@ tree.addValue(7)
 tree.addValue(9)
 tree.addValue(3)
 tree.addValue(0)
+tree.addValue(8)
 
 // for(let i=0; i<10; i++){
 //     tree.addValue(Math.floor(Math.random()*100))
@@ -146,4 +147,4 @@ tree.inOrder()
 // console.log(tree.searchBinary(9));
 // console.log(tree.searchBinary(0));
 // console.log(tree.getDepth(1));
-console.log('height'+tree.getHeight(9));
+console.log('height'+tree.getHeight(5));
