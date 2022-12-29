@@ -127,24 +127,69 @@ Tree.prototype.getHeight = function(value){
     return node.getHeight()
 }
 
+Tree.prototype.buildTree = function(array){
+    let sortedArray = array.sort(function(a, b){return a - b});
+    for(let i = 0; i < sortedArray.length-1; i++){
+        if(sortedArray[i] === sortedArray[i+1]){
+            sortedArray.splice(i, 1)
+        }
+    }
+    this.root = this.build(sortedArray)
+    return this.root
+}
+
+Tree.prototype.build = function(sortedArray){
+    if(sortedArray.length === 0 )return null
+
+    let mid = Math.floor(sortedArray.length/2)
+    let root = new Node(sortedArray[mid])
+    
+    root.left = this.build(sortedArray.slice(0, mid))
+    root.right = this.build(sortedArray.slice(mid+1))
+
+    return root
+}
+
+Tree.prototype.levelOrder = function(root){
+    let queue = []
+    let result = []
+    queue.push(root)
+    // console.log(queue);
+    // console.log(queue.shift());
+    while(queue.length>0){
+        let current = queue[0]
+        console.log(queue[0].value);
+        if(current.left !== null) queue.push(current.left)
+        if(current.right !== null) queue.push(current.right)
+        result.push(queue[0])
+        queue.shift()
+    }
+    return result
+}
+
 // Example
 let tree = new Tree()
-tree.addValue(5)
-tree.addValue(2)
-tree.addValue(1)
-tree.addValue(7)
-tree.addValue(9)
-tree.addValue(3)
-tree.addValue(0)
-tree.addValue(8)
+// tree.addValue(5)
+// tree.addValue(2)
+// tree.addValue(1)
+// tree.addValue(7)
+// tree.addValue(9)
+// tree.addValue(3)
+// tree.addValue(0)
+// tree.addValue(8)
 
 // for(let i=0; i<10; i++){
-//     tree.addValue(Math.floor(Math.random()*100))
-// }
+    //     tree.addValue(Math.floor(Math.random()*100))
+    // }
 
-console.log(tree);
-tree.inOrder()
+    // console.log(tree);
+// tree.inOrder()
 // console.log(tree.searchBinary(9));
 // console.log(tree.searchBinary(0));
 // console.log(tree.getDepth(1));
-console.log('height'+tree.getHeight(5));
+// console.log('height'+tree.getHeight(5));
+// console.log([2].slice(0,1));
+// console.log(Math.ceil([2].length/2));
+console.log(tree.buildTree([2,5,3,8,6,4,6]))
+console.log(tree.root);
+console.log(tree.levelOrder(tree.root));
