@@ -1,5 +1,22 @@
+function selectShortestOne(start, end){
+    let finalArray = []
+    while(finalArray.length<20){
+        finalArray.push(selectShortest(start, end))
+        finalArray.sort(function(a, b){return a.length - b.length});
+    }
+    return finalArray[0]
+}
+
+function selectShortest(start, end){
+    let array =[]
+    while(array.length<300){
+        array.push(shortestPath(start, end))
+        array.sort(function(a, b){return a.length - b.length});
+    }
+    return array[0]
+}
+
 function shortestPath(start, end){
-    
     let array = start
     let path = []
     let found =false
@@ -7,13 +24,11 @@ function shortestPath(start, end){
     path.push(result)
 
     let counter = 0
-    while((result[0] !== end[0] || result[1] !== end[1]) && counter<8){
+    while((result[0] !== end[0] || result[1] !== end[1]) && counter<7){
         result=move(result)
         path.push(result)
         counter++
     }
-    // console.log(path);
-    // console.log(path[path.length-1])
 
     found = path.find((array)=>array[0]===end[0] && array[1]===end[1])
     if(!found){
@@ -22,15 +37,7 @@ function shortestPath(start, end){
         return path
     }
 
-
     return path
-}
-
-function selectShortest(path){
-    let arrays
-    arrays = [...arrays, path]
-    return arrays
-
 }
 
 // Move knight functionality
@@ -139,7 +146,9 @@ function move(position){
             y+=ranNum
         }
     }else if(x===1 && y>1 && y<7){
-        ranNum = getRandom(-1,2)
+        do{
+            ranNum = getRandom(-1,2)
+        }while(ranNum===0)
         x+=ranNum
         if(ranNum===2 || ranNum===-2){
             ranNum = 1 * (Math.round(Math.random()) ? 1 : -1)
@@ -149,9 +158,11 @@ function move(position){
             y+=ranNum
         }
     }else if(y===1 && x>1 && x<7){
-        ranNum = getRandom(-1,2)
+        do{
+            ranNum = getRandom(-1,2)
+        }while(ranNum===0)
         y+=ranNum
-        if(ranNum===2 || ranNum===-2){
+        if(ranNum===2){
             ranNum = 1 * (Math.round(Math.random()) ? 1 : -1)
             x+=ranNum
         }else{
@@ -159,7 +170,9 @@ function move(position){
             x+=ranNum
         }
     }else if(x===7 && y>1 && y<7){
-        ranNum = getRandom(-2,1)
+        do{
+            ranNum = getRandom(-2,1)
+        }while(ranNum===0)
         x+=ranNum
         if(ranNum===2 || ranNum===-2){
             ranNum = 1 * (Math.round(Math.random()) ? 1 : -1)
@@ -169,7 +182,9 @@ function move(position){
             y+=ranNum
         }
     }else if(y===7 && x>1 && x<7){
-        ranNum = getRandom(-2,1)
+        do{
+            ranNum = getRandom(-2,1)
+        }while(ranNum===0)
         y+=ranNum
         if(ranNum===2 || ranNum===-2){
             ranNum = 1 * (Math.round(Math.random()) ? 1 : -1)
@@ -254,9 +269,4 @@ function getRandom(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
-// console.log(move([0,0]))
-console.log(shortestPath([0,0], [1,2]))
-// let array = []
-// array.push(1)
-// array = [...array, 2]
-// console.log(array);
+console.log(selectShortestOne([0,6], [7,1]))
